@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, api, _
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    commercial_partner_id = fields.Many2one(
+        'res.partner', 
+        related='partner_id.commercial_partner_id', 
+        string='Entidad Comercial Relacionada',
+        store=False
+    )
 
     @api.constrains('pricelist_id', 'partner_id')
     def _check_pricelist_partner_restriction(self):
