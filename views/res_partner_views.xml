@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_pricelist_restrict" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.pricelist.restrict</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_product_pricelist']" position="before">
+                <field name="commercial_partner_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+                <attribute name="domain">['|', ('restrict_to_contacts', '=', False), '|', ('allowed_partner_ids', 'in', id), ('allowed_partner_ids', 'in', commercial_partner_id)]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
